@@ -1,26 +1,36 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Piano from "./components/Piano";
+import KeySelect from "./components/KeySelect";
+import {Chord} from "./types";
+import {createDiatonicChords, createModalInterchangeChords, createSecondaryDominantChords} from "./util";
+import ChordList from "./components/ChordList";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const defaultKey = { major: 'C', minor: 'A', accidentals: '0' };
+    const [diatonicChords, setDiatonicChords] = React.useState<Chord[]>(createDiatonicChords(defaultKey));
+    const [secondaryDominantChords, setSecondaryDominantChords] = React.useState<Chord[]>(createSecondaryDominantChords(defaultKey));
+    const [modalInterchangeChords, setModalInterchangeChords] = React.useState<Chord[]>(createModalInterchangeChords(defaultKey));
+
+    return (
+        <div className="App">
+            <div>
+                Key: <KeySelect onKeyChange={(key) => {
+                    setDiatonicChords(createDiatonicChords(key));
+                    setSecondaryDominantChords(createSecondaryDominantChords(key));
+                    setModalInterchangeChords(createModalInterchangeChords(key));
+                }}/>
+
+                <h2>ダイアトニックコード</h2>
+                <ChordList chords={diatonicChords} />
+                <h2>セカンダリードミナント</h2>
+                <ChordList chords={secondaryDominantChords} />
+                <h2>モーダルインターチェンジ</h2>
+                <ChordList chords={modalInterchangeChords} />
+            </div>
+        </div>
+    );
 }
 
 export default App;
