@@ -7,6 +7,7 @@ type PianoProps = {
     readOnly?: boolean;
     markedKeys?: Mark[];
     defaultMarkColor?: string;
+    onMarkChange?: (markedNotes: NoteNo[]) => void;  // new prop for callback
 };
 
 const Piano: FC<PianoProps> = (props: PianoProps) => {
@@ -15,6 +16,7 @@ const Piano: FC<PianoProps> = (props: PianoProps) => {
         readOnly = false,
         markedKeys = [],
         defaultMarkColor = 'red',
+        onMarkChange,  // get the callback
     } = props;
     const [keyMarks, setKeyMarks] = useState<{ [key: number]: Mark | undefined }>({});
 
@@ -32,10 +34,19 @@ const Piano: FC<PianoProps> = (props: PianoProps) => {
         if (readOnly) {
             return;
         }
-        setKeyMarks((prevKeyMarks) => ({
-            ...prevKeyMarks,
-            [noteNo]: prevKeyMarks[noteNo] ? undefined : {noteNo, color: defaultMarkColor},
-        }));
+        setKeyMarks((prevKeyMarks) => {
+            const updatedMarks = {
+                ...prevKeyMarks,
+                [noteNo]: prevKeyMarks[noteNo] ? undefined : {noteNo, color: defaultMarkColor},
+            };
+            if (onMarkChange) {
+                const markedNotes = Object.values(updatedMarks)
+                    .filter(mark => mark !== undefined)
+                    .map(mark => mark!.noteNo);  // gather all marked NoteNo
+                onMarkChange(markedNotes);
+            }
+            return updatedMarks;
+        });
     };
 
     const renderKey = (noteNo: NoteNo, index: number) => {

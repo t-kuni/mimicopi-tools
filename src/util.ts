@@ -102,7 +102,7 @@ export function createModalInterchangeChords(tonality: Tonality): MarksOfChord[]
     return createChords(tonality, ModalInterchangeChords);
 }
 
-export function createChords(tonality: Tonality, chordList: Chord[]): MarksOfChord[] {
+function createChords(tonality: Tonality, chordList: Chord[]): MarksOfChord[] {
     const majorNoteNo = FlatToSharp[tonality.majorNoteNo] ?? tonality.majorNoteNo;
 
     return chordList.map<MarksOfChord>((c: Chord) => {
@@ -116,5 +116,11 @@ export function createChords(tonality: Tonality, chordList: Chord[]): MarksOfCho
             }
         });
         return { chordName, marks };
+    });
+}
+
+export function filterChords(chords: MarksOfChord[], filterNotes: NoteNo[]): MarksOfChord[] {
+    return chords.filter(c => {
+        return c.marks.filter(m => filterNotes.includes(m.noteNo)).length > 0;
     });
 }
