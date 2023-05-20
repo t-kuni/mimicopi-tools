@@ -107,6 +107,9 @@ const ModalInterchangeChords = [
     }
 ]
 
+const RootKeyColor = 'red';
+const OtherKeyColor = 'green';
+
 export function createDiatonicChords(keyInfo: KeyInfo): Chord[] {
     const majorKey = flatToSharp[keyInfo.major] || keyInfo.major as Key;
     const rootIndex = allKeys.indexOf(majorKey);
@@ -115,7 +118,7 @@ export function createDiatonicChords(keyInfo: KeyInfo): Chord[] {
         const chordRootIdx = (rootIndex + chordInfo.root) % 12;
         const name = allKeys[chordRootIdx] + chordInfo.suffix;
         const chord = chordInfo.chord.map((interval, idx) => {
-            return { key: allKeys[(chordRootIdx + interval) % 12], color: idx == 0 ? 'green' : 'red' }
+            return { key: allKeys[(chordRootIdx + interval) % 12], color: idx == 0 ? RootKeyColor : OtherKeyColor }
         });
         return { name, chord };
     });
@@ -129,7 +132,7 @@ export function createSecondaryDominantChords(keyInfo: KeyInfo): Chord[] {
         const chordRootIdx = (rootIndex + chordInfo.root) % 12;
         const name = allKeys[chordRootIdx] + chordInfo.suffix;
         const chord = chordInfo.chord.map((interval, idx) => {
-            return { key: allKeys[(chordRootIdx + interval) % 12], color: idx == 0 ? 'green' : 'red' }
+            return { key: allKeys[(chordRootIdx + interval) % 12], color: idx == 0 ? RootKeyColor : OtherKeyColor }
         });
         return { name, chord };
     });
@@ -143,7 +146,7 @@ export function createModalInterchangeChords(keyInfo: KeyInfo): Chord[] {
         const chordRootIdx = (rootIndex + chordInfo.root) % 12;
         const name = allKeys[chordRootIdx] + chordInfo.suffix;
         const chord = chordInfo.chord.map((interval, idx) => {
-            return { key: allKeys[(chordRootIdx + interval) % 12], color: idx == 0 ? 'green' : 'red' }
+            return { key: allKeys[(chordRootIdx + interval) % 12], color: idx == 0 ? RootKeyColor : OtherKeyColor }
         });
         return { name, chord };
     });
