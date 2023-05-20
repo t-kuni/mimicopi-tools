@@ -17,17 +17,11 @@ const Piano: FC<PianoProps> = ({
                                    markedKeys = [],
                                    defaultMarkColor = 'red',
                                }) => {
-    const [marks, setMarks] = useState<{ [key: string]: Mark | undefined }>({});
-
-    useEffect(() => {
-        let newMarks: { [key: string]: Mark | undefined } = {};
-        markedKeys.forEach((mark) => {
-            for (let i = 0; i < octave; i++) {
-                newMarks[mark.key] = mark;
-            }
-        });
-        setMarks(newMarks);
-    }, [markedKeys, octave]);
+    let defaultMarks: { [key: string]: Mark | undefined } = {};
+    markedKeys.forEach((mark) => {
+        defaultMarks[mark.key] = mark;
+    });
+    const [marks, setMarks] = useState<{ [key: string]: Mark | undefined }>(defaultMarks);
 
     const handleClick = (key: Key) => {
         if (readOnly) {

@@ -21,7 +21,12 @@ function App() {
                     setSecondaryDominantChords(createSecondaryDominantChords(key));
                     setModalInterchangeChords(createModalInterchangeChords(key));
                 }}/>
-
+            </div>
+            <div>
+                <h2>構成音フィルタ</h2>
+                <Piano />
+            </div>
+            <div>
                 <h2>ダイアトニックコード</h2>
                 <ChordList chords={diatonicChords} />
                 <h2>セカンダリードミナント</h2>
