@@ -67,20 +67,20 @@ const PianoContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   border: 1px solid black;
-  padding: 10px;
+  padding: 5px;
   background-color: white;
   width: fit-content;
 `;
 
 const KeyUI = styled.button<{ isBlackKey: boolean; isMarked: boolean; markColor?: string }>`
-  width: ${(props) => (props.isBlackKey ? '20px' : '40px')};
-  height: ${(props) => (props.isBlackKey ? '100px' : '120px')};
+  width: ${(props) => (props.isBlackKey ? '16px' : '30px')};
+  height: ${(props) => (props.isBlackKey ? '55px' : '80px')};
   background-color: ${(props) => (props.isBlackKey ? 'black' : 'white')};
   color: ${(props) => (props.isBlackKey ? 'white' : 'black')};
   border: ${(props) => (props.isBlackKey ? 'none' : '1px solid black')};
   position: relative;
   cursor: ${(props) => (props.isMarked ? 'pointer' : 'default')};
-  margin: ${(props) => (props.isBlackKey ? '0 0 0 -10px' : '0')};
+  margin: ${(props) => (props.isBlackKey ? '0 -8px 0 -8px' : '0')};
   z-index: ${(props) => (props.isBlackKey ? '2' : '1')};
   &:active {
     top: 1px;
