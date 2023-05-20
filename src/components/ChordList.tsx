@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Chord } from '../types';
+import { MarksOfChord } from '../models';
 import Piano from './Piano';
 
 type ChordListProps = {
-    chords: Chord[];
+    chords: MarksOfChord[];
 };
 
 const ChordList: FC<ChordListProps> = ({ chords }) => {
@@ -12,8 +12,8 @@ const ChordList: FC<ChordListProps> = ({ chords }) => {
         <ChordListContainer>
             {chords.map((chord, index) => (
                 <ChordContainer key={index}>
-                    <ChordName>{chord.name}</ChordName>
-                    <Piano octave={2} readOnly markedKeys={chord.chord} />
+                    <ChordName>{chord.chordName}</ChordName>
+                    <Piano octave={2} readOnly markedKeys={chord.marks} />
                 </ChordContainer>
             ))}
         </ChordListContainer>

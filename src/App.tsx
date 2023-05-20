@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
 import Piano from "./components/Piano";
-import KeySelect from "./components/KeySelect";
-import {Chord} from "./types";
+import TonalitySelect from "./components/TonalitySelect";
+import {DefaultTonality, MarksOfChord} from "./models";
 import {createDiatonicChords, createModalInterchangeChords, createSecondaryDominantChords} from "./util";
 import ChordList from "./components/ChordList";
 
 function App() {
-    const defaultKey = { major: 'C', minor: 'A', accidentals: '0' };
-    const [diatonicChords, setDiatonicChords] = React.useState<Chord[]>(createDiatonicChords(defaultKey));
-    const [secondaryDominantChords, setSecondaryDominantChords] = React.useState<Chord[]>(createSecondaryDominantChords(defaultKey));
-    const [modalInterchangeChords, setModalInterchangeChords] = React.useState<Chord[]>(createModalInterchangeChords(defaultKey));
+    const [diatonicChords, setDiatonicChords] = useState(createDiatonicChords(DefaultTonality));
+    const [secondaryDominantChords, setSecondaryDominantChords] = useState(createSecondaryDominantChords(DefaultTonality));
+    const [modalInterchangeChords, setModalInterchangeChords] = useState(createModalInterchangeChords(DefaultTonality));
 
     return (
         <div className="App">
             <div>
-                Key: <KeySelect onKeyChange={(key) => {
-                    setDiatonicChords(createDiatonicChords(key));
-                    setSecondaryDominantChords(createSecondaryDominantChords(key));
-                    setModalInterchangeChords(createModalInterchangeChords(key));
+                Key: <TonalitySelect onKeyChange={(tonality) => {
+                    setDiatonicChords(createDiatonicChords(tonality));
+                    setSecondaryDominantChords(createSecondaryDominantChords(tonality));
+                    setModalInterchangeChords(createModalInterchangeChords(tonality));
                 }}/>
             </div>
             <div>

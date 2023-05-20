@@ -1,6 +1,6 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, {useState, useEffect, FC} from 'react';
 import styled from 'styled-components';
-import {Mark, Key} from "../types";
+import {Mark, NoteNo, PianoKeys, PianoBlackKeys} from "../models";
 
 type PianoProps = {
     octave?: number;
@@ -9,48 +9,53 @@ type PianoProps = {
     defaultMarkColor?: string;
 };
 
-const KEYS: Key[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const Piano: FC<PianoProps> = (props: PianoProps) => {
+    const {
+        octave = 1,
+        readOnly = false,
+        markedKeys = [],
+        defaultMarkColor = 'red',
+    } = props;
+    const [keyMarks, setKeyMarks] = useState<{ [key: number]: Mark | undefined }>({});
 
-const Piano: FC<PianoProps> = ({
-                                   octave = 1,
-                                   readOnly = false,
-                                   markedKeys = [],
-                                   defaultMarkColor = 'red',
-                               }) => {
-    let defaultMarks: { [key: string]: Mark | undefined } = {};
-    markedKeys.forEach((mark) => {
-        defaultMarks[mark.key] = mark;
-    });
-    const [marks, setMarks] = useState<{ [key: string]: Mark | undefined }>(defaultMarks);
+    useEffect(() => {
+        let updatedKeyMarks: { [key: number]: Mark | undefined } = {};
+        if (markedKeys !== undefined) {
+            markedKeys.forEach((mark: Mark) => {
+                updatedKeyMarks[mark.noteNo] = mark;
+            });
+        }
+        setKeyMarks(updatedKeyMarks);
+    }, [props.markedKeys]); // ここをmarkedKeysにすると無限ループになる
 
-    const handleClick = (key: Key) => {
+    const handleClick = (noteNo: NoteNo) => {
         if (readOnly) {
             return;
         }
-        setMarks({
-            ...marks,
-            [key]: marks[key] ? undefined : { key, color: defaultMarkColor },
-        });
+        setKeyMarks((prevKeyMarks) => ({
+            ...prevKeyMarks,
+            [noteNo]: prevKeyMarks[noteNo] ? undefined : {noteNo, color: defaultMarkColor},
+        }));
     };
 
-    const renderKey = (key: Key, index: number) => {
-        const mark = marks[key];
-        const isBlackKey = key.includes('#');
+    const renderKey = (noteNo: NoteNo, index: number) => {
+        const mark = keyMarks[noteNo];
+        const isBlackKey = PianoBlackKeys.includes(noteNo);
         return (
             <KeyUI
-                key={`${key}-${index}`}
+                key={`${noteNo}-${index}`}
                 isBlackKey={isBlackKey}
                 isMarked={!!mark}
                 markColor={mark?.color}
-                onClick={() => handleClick(key)}
+                onClick={() => handleClick(noteNo)}
             />
         );
     };
 
     return (
         <PianoContainer>
-            {Array.from({ length: octave }, (_, i) => i).flatMap((_, index) =>
-                KEYS.map((key) => renderKey(key, index))
+            {Array.from({length: octave}, (_, i) => i).flatMap((_, index) =>
+                PianoKeys.map((key) => renderKey(key, index))
             )}
         </PianoContainer>
     );
