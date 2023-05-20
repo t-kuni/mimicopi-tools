@@ -5,6 +5,7 @@ import TonalitySelect from "./components/TonalitySelect";
 import {DefaultTonality, MarksOfChord, NoteNo, Tonality} from "./models";
 import {createDiatonicChords, createModalInterchangeChords, createSecondaryDominantChords, filterChords} from "./util";
 import ChordList from "./components/ChordList";
+import styled from "styled-components";
 
 function App() {
     const [tonality, setTonality] = useState<Tonality>(DefaultTonality);
@@ -12,6 +13,7 @@ function App() {
     const [secondaryDominantChords, setSecondaryDominantChords] = useState(createSecondaryDominantChords(tonality));
     const [modalInterchangeChords, setModalInterchangeChords] = useState(createModalInterchangeChords(tonality));
     const [filterNotes, setFilterNotes] = useState<NoteNo[]>([]);
+    const [chordProgressText, setChordProgressText] = useState<string>('');
 
     useEffect(() => {
         if (filterNotes.length === 0) {
@@ -25,30 +27,55 @@ function App() {
         }
     }, [tonality, filterNotes]);
 
+    const onClickChord = (chord: MarksOfChord) => {
+        setChordProgressText((prev) => {
+            if (prev === '') {
+                return chord.chordName;
+            }
+            return prev + ' | ' + chord.chordName
+        });
+    }
+
     return (
-        <div className="App">
+        <AppContainer className="App">
             <div>
                 Key: <TonalitySelect onKeyChange={(tonality) => {
-                    setTonality(tonality)
-                }}/>
+                setTonality(tonality)
+            }}/>
             </div>
             <div>
                 <h2>構成音フィルタ</h2>
                 <Piano onMarkChange={(markedNotes: NoteNo[]) => {
-                    console.log("onMarkChange", markedNotes);
                     setFilterNotes(markedNotes);
                 }}/>
             </div>
             <div>
                 <h2>ダイアトニックコード</h2>
-                <ChordList chords={diatonicChords} />
+                <ChordList chords={diatonicChords} onClickChord={onClickChord}/>
                 <h2>セカンダリードミナント</h2>
-                <ChordList chords={secondaryDominantChords} />
+                <ChordList chords={secondaryDominantChords} onClickChord={onClickChord}/>
                 <h2>モーダルインターチェンジ</h2>
-                <ChordList chords={modalInterchangeChords} />
+                <ChordList chords={modalInterchangeChords} onClickChord={onClickChord}/>
             </div>
-        </div>
+            <FooterContainer>
+                <textarea value={chordProgressText} cols={100} rows={10} onChange={e => setChordProgressText(e.target.value)}></textarea>
+            </FooterContainer>
+        </AppContainer>
     );
 }
+
+const AppContainer = styled.div`
+    margin-bottom: 300px;
+`;
+
+const FooterContainer = styled.div`
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid black;
+    background-color: white;
+    padding: 5px;
+    z-index: 10;
+`;
 
 export default App;

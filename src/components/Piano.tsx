@@ -7,7 +7,8 @@ type PianoProps = {
     readOnly?: boolean;
     markedKeys?: Mark[];
     defaultMarkColor?: string;
-    onMarkChange?: (markedNotes: NoteNo[]) => void;  // new prop for callback
+    onMarkChange?: (markedNotes: NoteNo[]) => void;
+    onClick?: () => void;
 };
 
 const Piano: FC<PianoProps> = (props: PianoProps) => {
@@ -16,7 +17,8 @@ const Piano: FC<PianoProps> = (props: PianoProps) => {
         readOnly = false,
         markedKeys = [],
         defaultMarkColor = 'red',
-        onMarkChange,  // get the callback
+        onMarkChange,
+        onClick,
     } = props;
     const [keyMarks, setKeyMarks] = useState<{ [key: number]: Mark | undefined }>({});
 
@@ -31,6 +33,9 @@ const Piano: FC<PianoProps> = (props: PianoProps) => {
     }, [props.markedKeys]); // ここをmarkedKeysにすると無限ループになる
 
     const handleClick = (noteNo: NoteNo) => {
+        if (onClick) {
+            onClick();
+        }
         if (readOnly) {
             return;
         }
