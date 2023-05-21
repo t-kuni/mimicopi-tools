@@ -65,6 +65,37 @@ export const NoteNoToTextOnFlat: { [key: number]: string } = {
     [B]: 'B',
 }
 
+export const NoteNoToRomanTextOnSharp: { [key: number]: string } = {
+    0: 'Ⅰ',
+    1: 'Ⅰ#',
+    2: 'Ⅱ',
+    3: 'Ⅱ#',
+    4: 'Ⅲ',
+    5: 'Ⅳ',
+    6: 'Ⅳ#',
+    7: 'Ⅴ',
+    8: 'Ⅴ#',
+    9: 'Ⅵ',
+    10: 'Ⅵ#',
+    11: 'Ⅶ',
+};
+
+export const NoteNoToRomanTextOnFlat: { [key: number]: string } = {
+    0: 'Ⅰ',
+    1: '♭Ⅱ',
+    2: 'Ⅱ',
+    3: '♭Ⅲ',
+    4: 'Ⅲ',
+    5: 'Ⅳ',
+    6: '♭Ⅴ',
+    7: 'Ⅴ',
+    8: '♭Ⅵ',
+    9: 'Ⅵ',
+    10: '♭Ⅶ',
+    11: 'Ⅶ',
+};
+
+
 export const NoteTextToNoteNo: { [key: string]: NoteNo } = {
     'C': C,
     'C#': Cs,
@@ -93,6 +124,7 @@ export type Mark = {
 
 export type MarksOfChord = {
     chordName: string;
+    chordNameWithRoman: string;
     marks: Mark[];
 };
 

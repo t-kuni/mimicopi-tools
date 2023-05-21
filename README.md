@@ -1,3 +1,19 @@
+# mimicopi-tools
+
+メロディにコードを当てるのを支援するツール
+
+# TODO
+
+* コード名にローマ数字表記を追加する
+* コードクリック時に音を鳴らす
+* BPMに対応
+* リズム切り替え（4ビート、2ビート）
+* 体裁を整える
+  * CSSフレームワークを適応する
+* 異なる音源に対応
+* コード進行のクリアボタン
+* 構成音フィルタのクリアボタン
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

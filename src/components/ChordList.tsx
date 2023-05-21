@@ -16,7 +16,7 @@ const ChordList: FC<ChordListProps> = ({
         <ChordListContainer>
             {chords.map((chord, index) => (
                 <ChordContainer key={index}>
-                    <ChordName>{chord.chordName}</ChordName>
+                    <ChordName>{chord.chordName}<ChordNameRoman>({chord.chordNameWithRoman})</ChordNameRoman></ChordName>
                     <Piano octave={2} readOnly markedKeys={chord.marks} onClick={() => onClickChord(chord)}/>
                 </ChordContainer>
             ))}
@@ -40,6 +40,12 @@ const ChordContainer = styled.div`
 
 const ChordName = styled.h2`
     text-align: center;
+`;
+
+const ChordNameRoman = styled.span`
+    font-size: 0.8em;
+    color: #666;
+    margin-left: 10px;
 `;
 
 export default ChordList;

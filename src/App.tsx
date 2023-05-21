@@ -70,6 +70,7 @@ function App() {
 
 const AppContainer = styled.div`
     margin-bottom: 300px;
+    padding: 10px;
 `;
 
 const FooterContainer = styled.div`

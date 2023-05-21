@@ -2,7 +2,15 @@ import {
     MarksOfChord,
     Tonality,
     NoteNo,
-    FlatToSharp, Chord, MajorChord, MinorChord, Minorb5Chord, SeventhChord, NoteNoToTextOnFlat, NoteNoToTextOnSharp,
+    FlatToSharp,
+    Chord,
+    MajorChord,
+    MinorChord,
+    Minorb5Chord,
+    SeventhChord,
+    NoteNoToTextOnFlat,
+    NoteNoToTextOnSharp,
+    NoteNoToRomanTextOnFlat, NoteNoToRomanTextOnSharp,
 } from './models';
 
 const diatonicChords: Chord[] = [
@@ -109,13 +117,15 @@ function createChords(tonality: Tonality, chordList: Chord[]): MarksOfChord[] {
         const rootNoteNo = (majorNoteNo + c.rootNoteNo) % 12 as NoteNo;
         const rootNoteText = tonality.isFlat ? NoteNoToTextOnFlat[rootNoteNo] : NoteNoToTextOnSharp[rootNoteNo];
         const chordName = `${rootNoteText}${c.chordStructure.suffix}`;
+        const rootNoteRomanText = tonality.isFlat ? NoteNoToRomanTextOnFlat[c.rootNoteNo] : NoteNoToRomanTextOnSharp[c.rootNoteNo];
+        const chordNameWithRoman = `${rootNoteRomanText}${c.chordStructure.suffix}`;
         const marks = c.chordStructure.notes.map((interval, idx) => {
             return {
                 noteNo: (rootNoteNo + interval) % 12 as NoteNo,
                 color: idx == 0 ? RootKeyColor : OtherKeyColor
             }
         });
-        return { chordName, marks };
+        return { chordName, chordNameWithRoman, marks };
     });
 }
 

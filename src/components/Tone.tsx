@@ -32,10 +32,11 @@ const PlayChordButton: React.FC<PlayChordButtonProps> = ({ progression }) => {
 
         playChordProgression.forEach((bar, barIndex) => {
             bar.forEach((chord, chordIndex) => {
-                // スケジューラーにコードを登録します。小節とコードの数に基づいて遅延時間を設定します。
+                // Schedulerにコードを登録します。小節とコードの数に基づいて遅延時間を設定します。
+                // 小節の中のコードの位置に基づいてスケジュールします
                 Tone.Transport.scheduleOnce((time) => {
                     piano.triggerAttackRelease(chord.map(note => note.note), chord[0].duration, time);
-                }, `${barIndex}:0:0`);
+                }, `${barIndex}:${chordIndex}:0`);
             });
         });
 
