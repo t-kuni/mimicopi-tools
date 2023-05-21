@@ -6,6 +6,7 @@ import {DefaultTonality, MarksOfChord, NoteNo, Tonality} from "./models";
 import {createDiatonicChords, createModalInterchangeChords, createSecondaryDominantChords, filterChords} from "./util";
 import ChordList from "./components/ChordList";
 import styled from "styled-components";
+import Tone from "./components/Tone";
 
 function App() {
     const [tonality, setTonality] = useState<Tonality>(DefaultTonality);
@@ -58,7 +59,10 @@ function App() {
                 <ChordList chords={modalInterchangeChords} onClickChord={onClickChord}/>
             </div>
             <FooterContainer>
-                <textarea value={chordProgressText} cols={100} rows={10} onChange={e => setChordProgressText(e.target.value)}></textarea>
+                <textarea value={chordProgressText} cols={100} rows={4} onChange={e => setChordProgressText(e.target.value)}></textarea>
+                <div>
+                    <Tone progression={chordProgressText}/>
+                </div>
             </FooterContainer>
         </AppContainer>
     );

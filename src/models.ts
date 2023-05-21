@@ -65,6 +65,27 @@ export const NoteNoToTextOnFlat: { [key: number]: string } = {
     [B]: 'B',
 }
 
+export const NoteTextToNoteNo: { [key: string]: NoteNo } = {
+    'C': C,
+    'C#': Cs,
+    'Db': Cs,
+    'D': D,
+    'D#': Ds,
+    'Eb': Ds,
+    'E': E,
+    'F': F,
+    'F#': Fs,
+    'Gb': Fs,
+    'G': G,
+    'G#': Gs,
+    'Ab': Gs,
+    'A': A,
+    'A#': As,
+    'Bb': As,
+    'B': B,
+};
+
+
 export type Mark = {
     noteNo: NoteNo;
     color: string;
@@ -128,3 +149,10 @@ export type Chord = {
     rootNoteNo: NoteNo;
     chordStructure: ChordStructure;
 }
+
+export type PlayNote = {
+    note: string;
+    duration: string;
+}
+
+export type PlayChordProgression = PlayNote[][][];
