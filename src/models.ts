@@ -21,6 +21,18 @@ export const B: NoteNo = 11;
 export const Bs: NoteNo = 0;
 
 export type NoteNo = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export const MaxNoteNo: NoteNo = 11;
+export const MinNoteNo: NoteNo = 0;
+
+export function normalizeNoteNo(noteNo: NoteNo): NoteNo {
+    if (noteNo < MinNoteNo) {
+        return noteNo + 12 as NoteNo;
+    }
+    if (noteNo > MaxNoteNo) {
+        return noteNo - 12 as NoteNo;
+    }
+    return noteNo;
+}
 
 export const PianoKeys: NoteNo[] = [C, Cs, D, Ds, E, F, Fs, G, Gs, A, As, B];
 export const PianoBlackKeys: NoteNo[] = [Cs, Ds, Fs, Gs, As];
@@ -188,3 +200,7 @@ export type PlayNote = {
 }
 
 export type PlayChordProgression = PlayNote[][][];
+
+export type Tab = "Chord" | "Scale";
+
+export const MajorScale: NoteNo[] = [0, 2, 4, 5, 7, 9, 11];
